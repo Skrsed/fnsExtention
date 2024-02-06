@@ -1,12 +1,31 @@
-function reddenPage() {
-    document.body.style.backgroundColor = 'red'
+const registerListners = () => {
+    chrome.tabs.onActivated.addListener(makeHandler('onActivated'))
+    chrome.tabs.onCreated.addListener(makeHandler('onCreated'))
+    chrome.tabs.onUpdated.addListener(makeHandler('onUpdated'))
 }
 
-chrome.action.onClicked.addListener((tab) => {
-    if (!tab.url.includes('chrome://')) {
-        chrome.scripting.executeScript({
-            target: { tabId: tab.id },
-            function: reddenPage
-        })
+const makeHandler = (event) => {
+    console.log(`event: ${event}`)
+
+    console.log({ tabsObject: chrome.tabs })
+
+    return inject
+}
+
+const inject = async (tab) => {
+    console.log({ tab })
+    try {
+        await chrome.scripting.executeScript({
+            target: {
+                tabId: tab.tabId
+            },
+            func: () => {
+                document.body.style.border = "5px solid green"
+            },
+        });
+    } catch (err) {
+        console.error(`failed to execute script: ${err}`)
     }
-})
+}
+
+registerListners()

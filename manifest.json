@@ -5,11 +5,20 @@
     "manifest_version": 3,
     "permissions": [
         "activeTab",
-        "scripting"
+        "scripting",
+        "tabs",
+        "background",
+        "notifications"
+    ],
+    "host_permissions": [
+        "https://*/*",
+        "http://*/*"
     ],
     "action": {
         "default_popup": "./controll/index.html",
-        "default_icon": "./assets/icons.png"
+        "default_icon": {
+            "48": "./assets/icons.png"
+        }
     },
     "background": {
         "service_worker": "app/index.js",
